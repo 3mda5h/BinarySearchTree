@@ -36,7 +36,11 @@ int main()
     {
       cout << "Number?" << endl;
       cin.getline(input, 100);
-      if(tree->search(atoi(input)) == true;
+      if(tree->search(atoi(input)) == true)
+      {
+        cout << "This number is in the tree" << endl;
+      }
+      else cout << "This number is not in the tree :(" << endl;
     }
     else if(strcmp(input, "display") == 0)
     {

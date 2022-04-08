@@ -17,6 +17,7 @@ class Tree
   public:
   Tree();
   void insert(int number);
+  void insert(int number, Node* current);
   bool search(int number);
   bool search_impl(int number, Node* current);
   void display(Node* current, int level);

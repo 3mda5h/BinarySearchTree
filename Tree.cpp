@@ -10,13 +10,17 @@ Tree::Tree()
 
 void Tree::insert(int number)
 {
+  
+}
+
+void Tree::insert_impl(int number, Node* current)
+{
   if(root == NULL)
   {
     Node* newRoot = new Node();
     root = newRoot;
     return;
   }
-  Node* current = root;
   while(current != NULL)
     {
       if(current->right == NULL)
@@ -31,7 +35,8 @@ void Tree::insert(int number)
         newNode->number = number;
         current->left = newNode;
       }
-      else current = current->next;
+      insert_impl(current->right, number);
+      insert_impl(current->left, number);
     }
 }
 
@@ -60,10 +65,10 @@ void Tree::display(Node* current, int level)
   }
   if(current != NULL)
   {
-    display(current->left, level + 1);
+    display(current->right, level + 1);
     printTabs(level);
     cout << current->number << endl;
-    display(current->right, level + 1);
+    display(current->left, level + 1);
   }
   else return;
 }
