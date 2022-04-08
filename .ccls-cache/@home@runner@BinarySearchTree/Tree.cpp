@@ -10,7 +10,29 @@ Tree::Tree()
 
 void Tree::insert(int number)
 {
-  
+  if(root == NULL)
+  {
+    Node* newRoot = new Node();
+    root = newRoot;
+    return;
+  }
+  Node* current = root;
+  while(current != NULL)
+    {
+      if(current->right == NULL)
+      {
+        Node* newNode = new Node();
+        newNode->number = number;
+        current->right = newNode;
+      }
+      else if(current->left == NULL)
+      {
+        Node* newNode = new Node();
+        newNode->number = number;
+        current->left = newNode;
+      }
+      else current = current->next;
+    }
 }
 
 bool Tree::search(int number)
