@@ -10,53 +10,71 @@ Tree::Tree()
 
 void Tree::insert(int number)
 {
-  
+  insert_impl(root, number); 
 }
 
-void Tree::insert_impl(int number, Node* current)
+void Tree::insert_impl(Node* current, int number)
 {
   if(root == NULL)
   {
     Node* newRoot = new Node();
+    newRoot->number = number;
     root = newRoot;
     return;
   }
-  while(current != NULL)
+  if(current != NULL)
     {
-      if(current->right == NULL)
+      if(number > current->number)
       {
-        Node* newNode = new Node();
-        newNode->number = number;
-        current->right = newNode;
+        if(current->right != NULL)
+        {
+          insert_impl(current->right, number);
+        }
+        else
+        {
+          Node* newNode = new Node();
+          newNode->number = number;
+          current->right = newNode;
+        }
       }
-      else if(current->left == NULL)
+      else //number is less than or equal to current
       {
-        Node* newNode = new Node();
-        newNode->number = number;
-        current->left = newNode;
+        if(current->left != NULL)
+        {
+          insert_impl(current->left, number);
+        }
+        else
+        {
+          Node* newNode = new Node();
+          newNode->number = number;
+          current->left = newNode;
+        }
       }
-      insert_impl(current->right, number);
-      insert_impl(current->left, number);
     }
 }
 
 bool Tree::search(int number)
 {
-  return search_impl(number, root);
+  return search_impl(root, number);
 }
 
-bool Tree::search_impl(int number, Node* current)
+bool Tree::search_impl(Node* current, int number)
 {
   if(current->number == 2) return true;
   else
   {
-    search_impl(number, current->right);
-    search_impl(number, current->left);
+    search_impl(current->right, number);
+    search_impl(current->left, number);
   }
   return false;
 }
 
-void Tree::display(Node* current, int level)
+void Tree::display()
+{
+  display_impl(root, 0);
+}
+
+void Tree::display_impl(Node* current, int level)
 {
   if(current == NULL && level == 0)
   {
@@ -65,10 +83,10 @@ void Tree::display(Node* current, int level)
   }
   if(current != NULL)
   {
-    display(current->right, level + 1);
+    display_impl(current->right, level + 1);
     printTabs(level);
     cout << current->number << endl;
-    display(current->left, level + 1);
+    display_impl(current->left, level + 1);
   }
   else return;
 }

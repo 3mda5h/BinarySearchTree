@@ -44,14 +44,14 @@ int main()
     }
     else if(strcmp(input, "display") == 0)
     {
-      tree->display(0, 0);
+      tree->display();
     }
     cout << "----------" << endl;
   }
 }
 
 //read in list of numbers seperated by spaces from the console
-void consoleInsert(Tree* tree)
+void consoleInput(Tree* tree)
 {
   char input[10000];
   cout << "Enter a list of numbers seperated by spaces" << endl;
@@ -78,7 +78,7 @@ void consoleInsert(Tree* tree)
 }
 
 //read in list of numbers seperated by spaces from a file
-void fileInsert(Tree* tree)
+void fileInput(Tree* tree)
 {
   char input[100];
   int number;

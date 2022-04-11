@@ -17,10 +17,11 @@ class Tree
   public:
   Tree();
   void insert(int number);
-  void insert(int number, Node* current);
+  void insert_impl(Node* current, int number);
   bool search(int number);
-  bool search_impl(int number, Node* current);
-  void display(Node* current, int level);
+  bool search_impl(Node* current, int number);
+  void display();
+  void display_impl(Node* current, int level);
   void printTabs(int level);
   private: 
   Node* root;
