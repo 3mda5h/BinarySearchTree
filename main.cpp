@@ -16,7 +16,7 @@ int main()
   char input[100];
   while(strcmp(input, "quit") != 0)
   {
-    cout << "Enter INSERT, SEARCH, DISPLAY, or QUIT" << endl;
+    cout << "Enter INSERT, REMOVE, SEARCH, DISPLAY, or QUIT" << endl;
     cin.getline(input, 100);
     if(strcmp(input, "insert") == 0)
     {

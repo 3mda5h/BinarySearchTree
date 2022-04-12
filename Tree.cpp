@@ -60,13 +60,10 @@ bool Tree::search(int number)
 
 bool Tree::search_impl(Node* current, int number)
 {
-  if(current->number == 2) return true;
-  else
-  {
-    search_impl(current->right, number);
-    search_impl(current->left, number);
-  }
-  return false;
+  if(current == NULL) return false;
+  if(current->number == number) return true;
+  if(number > current->number) return search_impl(current->right, number);
+  return search_impl(current->left, number);
 }
 
 void Tree::display()
@@ -81,7 +78,7 @@ void Tree::display_impl(Node* current, int level)
     cout << "Tree is empty :(" << endl;
     return;
   }
-  if(current != NULL)
+  else if(current != NULL)
   {
     display_impl(current->right, level + 1);
     printTabs(level);
