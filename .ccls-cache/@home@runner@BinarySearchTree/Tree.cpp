@@ -53,15 +53,47 @@ void Tree::insert_impl(Node* current, int number)
     }
 }
 
-bool Tree::search(int number)
+void Tree::remove(int number)
+{
+  Node* removeThis = search_impl(root, number);
+  if(removeThis == NULL)
+  {
+    cout << "That number isn't in the tree!" << endl;
+    return;
+  }
+  //if it only has one child
+  if(removeThis->left == NULL)
+  {
+    removeThis->right // need the previous one...
+  }
+  //find next largest number - right once, then left until end
+  Node* current = removeThis;
+  Node* previous;
+  current = removeThis->right;
+  while(current->left != NULL) 
+  {
+    previous = current;
+    current = current->left;
+  }
+  removeThis->number = current->number; //replacing the number were removing with the next larges number in tree
+  if(current->right != NULL)
+  {
+    previous->left = current->right;
+  }
+  previous->right = NULL;
+  delete current;
+}
+
+Node* Tree::search(int number)
 {
   return search_impl(root, number);
 }
 
-bool Tree::search_impl(Node* current, int number)
+//searches tree for certain number. if number is there, returns it's node. if not, returns null
+Node* Tree::search_impl(Node* current, int number)
 {
-  if(current == NULL) return false;
-  if(current->number == number) return true;
+  if(current == NULL) return NULL;
+  if(current->number == number) return current;
   if(number > current->number) return search_impl(current->right, number);
   return search_impl(current->left, number);
 }

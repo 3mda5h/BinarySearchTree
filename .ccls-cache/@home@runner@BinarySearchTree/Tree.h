@@ -18,8 +18,9 @@ class Tree
   Tree();
   void insert(int number);
   void insert_impl(Node* current, int number);
-  bool search(int number);
-  bool search_impl(Node* current, int number);
+  Node* search(int number);
+  Node* search_impl(Node* current, int number);
+  void remove(int number);
   void display();
   void display_impl(Node* current, int level);
   void printTabs(int level);

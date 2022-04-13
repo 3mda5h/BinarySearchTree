@@ -1,3 +1,8 @@
+/*binary search tree - all numbers to the right of any given parent node are greater than that parent node.
+all values to the left are less than or equal to that parent node. this structure makes searching tree
+for a specific number very efficient.
+Emily MacPherson, 
+*/
 #include <iostream>
 #include <cstring>
 #include <fstream>
@@ -32,11 +37,17 @@ int main()
         cout << "Insert successful" << endl;
       }
     }
+    else if(strcmp(input, "remove") == 0)
+    {
+      cout << "Number?" << endl;
+      cin.getline(input, 100);
+      tree->remove(atoi(input));
+    }
     else if(strcmp(input, "search") == 0)
     {
       cout << "Number?" << endl;
       cin.getline(input, 100);
-      if(tree->search(atoi(input)) == true)
+      if(tree->search(atoi(input)) != NULL)
       {
         cout << "This number is in the tree" << endl;
       }
