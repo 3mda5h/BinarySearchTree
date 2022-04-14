@@ -17,7 +17,7 @@ class Tree
   public:
   Tree();
   void insert(int number);
-  void insert_impl(Node* current, int number);
+  void insert_impl(Node* current, int number); //implementation functions so main doesn't have to acess root
   Node* search(int number);
   void remove(int number);
   void display();

@@ -1,7 +1,7 @@
-/*binary search tree - all numbers to the right of any given parent node are greater than that parent node.
-all values to the left are less than or equal to that parent node. this structure makes searching tree
+/*binary search tree - all numbers to the right of any given node are greater than that node.
+all values to the left are less than or equal to that node. this structure makes searching tree
 for a specific number very efficient.
-Emily MacPherson, 
+Emily MacPherson, 4/14/22
 */
 #include <iostream>
 #include <cstring>

@@ -13,6 +13,7 @@ void Tree::insert(int number)
   insert_impl(root, number); 
 }
 
+//insert a node into tree maintaining bst property
 void Tree::insert_impl(Node* current, int number)
 {
   if(root == NULL)
@@ -30,7 +31,7 @@ void Tree::insert_impl(Node* current, int number)
         {
           insert_impl(current->right, number);
         }
-        else
+        else //insert new node in empty slot
         {
           Node* newNode = new Node();
           newNode->number = number;
@@ -53,7 +54,7 @@ void Tree::insert_impl(Node* current, int number)
     }
 }
 
-
+//remove a given number from the tree while maintaining bst property
 void Tree::remove(int number)
 {
   Node* parent = search(number);
@@ -73,6 +74,7 @@ void Tree::remove(int number)
     if(removeThis->number > parent->number) parent->right = NULL;
     else parent->left = NULL;
     delete removeThis;
+    cout << "Number removed" << endl;
     return;
   }
   
@@ -81,7 +83,7 @@ void Tree::remove(int number)
   {
     if(removeThis->number > parent->number) //removeThis is the right child of parent
     {
-      if(removeThis->right != NULL) parent->right = removeThis->right; //removeThis has a right child, connect this child with parent of Remove this
+      if(removeThis->right != NULL) parent->right = removeThis->right; //removeThis has a right child, connect this child with parent of removeThis
       else parent->right = removeThis->left;
     }
     else //removeThis is the left child of parent
@@ -90,6 +92,7 @@ void Tree::remove(int number)
       else parent->left = removeThis->left;
     }
     delete removeThis;
+    cout << "Number removed" << endl;
     return;
   }
   
@@ -131,7 +134,7 @@ Node* Tree::search(int number)
   if(current == NULL) return NULL;
   return parent;
 
-  //how to do it recursively: 
+  //how to do it recursively - keeping this cause its cool
   /*if(current == NULL) return NULL;
   if(current->number == number) return current;
   if(number > current->number) return search_impl(current->right, number);
@@ -143,19 +146,9 @@ void Tree::display()
   display_impl(root, 0);
 }
 
-//displays tree using tabs
+//displays tree visually using tabs
 void Tree::display_impl(Node* current, int level)
-{
-  /*if(current != NULL)
-  {
-    cout << "parent " << current-> number << " has children "; 
-    if(current->right != NULL) cout << current->right->number;
-    if(current->left != NULL) cout << " and " << current->left->number;
-    cout << endl;
-    display_impl(current->right, 0);
-    display_impl(current->left, 0);
-  } */
-  
+{ 
   if(current == NULL && level == 0)
   {
     cout << "Tree is empty :(" << endl;
