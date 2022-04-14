@@ -55,14 +55,14 @@ void Tree::insert_impl(Node* current, int number)
 
 void Tree::remove(int number)
 {
-  /*use nonrecursive search. I'm not using my already made search function because I 
-  need both the parent and its child (function can't return 2 things - right?) */
+  /*using nonrecursive search. I'm not using my already made search function because I 
+  need both the parent and its child (function can't really return 2 things :(  ) */
   Node* removeThis = root;
   Node* parent;
-  while(removeThis != NULL && removeThis->number != number)
+  while(removeThis != NULL && removeThis->number != number) //for now removethis is the current node
   {
-    parent = removeThis;
-    if(removeThis->number > number) removeThis = removeThis->right;
+    parent = removeThis; 
+    if(number > removeThis->number) removeThis = removeThis->right;
     else removeThis = removeThis->left;
   }
   if(removeThis == NULL)
@@ -70,18 +70,31 @@ void Tree::remove(int number)
     cout << "That number isn't in the tree!" << endl;
     return;
   }
-  if(removeThis->left == NULL ^ removeThis->right == NULL) //^ = exclusive or - returns true if only one of the values is true (so if one child is null but not both)
+  //if removeThis only has one child remove it and connect its child with parent of removeThis
+  if(removeThis->left == NULL ^ removeThis->right == NULL) //^ = exclusive or - returns true if only one of the statements is true (so if one child is null but not both)
   {
-    //if it only has one child remove it and connect its child with removeThis's parent
-    
+    if(removeThis->number > parent->number) //removeThis is the right child of parent
+    {
+      if(removeThis->right != NULL) parent->right = removeThis->right; //removeThis has a right child, connect this child with parent of Remove this
+      else parent->right = removeThis->left;
+    }
+    else //removeThis is the left child of parent
+    {
+      if(removeThis->right != NULL) parent->left = removeThis->right; 
+      else parent->left = removeThis->left;
+    }
+    delete removeThis;
     return;
   }
-  else if(removeThis->left == NULL && removeThis->right == NULL) //node has no children
+  if(removeThis->left == NULL && removeThis->right == NULL) //removeThis has no children 
   {
-    
+    if(removeThis->number > parent->number) parent->right = NULL;
+    else parent->left = NULL;
+    delete removeThis;
     return;
   }
-  //find next largest number - right once, then left until end
+  
+  //removeThis has two children: find next largest number - right once, then left until end
   Node* previous;
   Node* nextLargest = removeThis->right;
   while(nextLargest->left != NULL) 
