@@ -55,33 +55,47 @@ void Tree::insert_impl(Node* current, int number)
 
 void Tree::remove(int number)
 {
-  Node* removeThis = search_impl(root, number);
+  /*use nonrecursive search. I'm not using my already made search function because I 
+  need both the parent and its child (function can't return 2 things - right?) */
+  Node* removeThis = root;
+  Node* parent;
+  while(removeThis != NULL && removeThis->number != number)
+  {
+    parent = removeThis;
+    if(removeThis->number > number) removeThis = removeThis->right;
+    else removeThis = removeThis->left;
+  }
   if(removeThis == NULL)
   {
     cout << "That number isn't in the tree!" << endl;
     return;
   }
-  //if it only has one child
-  if(removeThis->left == NULL)
+  if(removeThis->left == NULL ^ removeThis->right == NULL) //^ = exclusive or - returns true if only one of the values is true (so if one child is null but not both)
   {
-    removeThis->right // need the previous one...
+    //if it only has one child remove it and connect its child with removeThis's parent
+    
+    return;
+  }
+  else if(removeThis->left == NULL && removeThis->right == NULL) //node has no children
+  {
+    
+    return;
   }
   //find next largest number - right once, then left until end
-  Node* current = removeThis;
   Node* previous;
-  current = removeThis->right;
-  while(current->left != NULL) 
+  Node* nextLargest = removeThis->right;
+  while(nextLargest->left != NULL) 
   {
-    previous = current;
-    current = current->left;
+    previous = nextLargest;
+    nextLargest = nextLargest->left;
   }
-  removeThis->number = current->number; //replacing the number were removing with the next larges number in tree
-  if(current->right != NULL)
+  removeThis->number = nextLargest->number; //replacing the number were removing with the next largest number in tree
+  if(nextLargest->right != NULL)
   {
-    previous->left = current->right;
+    previous->left = nextLargest->right;
   }
   previous->right = NULL;
-  delete current;
+  delete nextLargest;
 }
 
 Node* Tree::search(int number)
