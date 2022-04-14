@@ -53,22 +53,21 @@ void Tree::insert_impl(Node* current, int number)
     }
 }
 
+
 void Tree::remove(int number)
 {
   Node* parent = search(number);
-  Node* removeThis;
-  if(parent->number == number) removeThis = parent; //number to be removed is the root so it has no parent
-  else if(number > parent->number) removeThis = parent->right;
-  else removeThis = parent->left;
   if(parent == NULL)
   {
     cout << "That number isn't in the tree!" << endl;
     return;
   }
-  cout << "parent is: " << parent->number << endl;
-  cout << "child to be removed is: " << removeThis->number << endl;
+  Node* removeThis;
+  if(parent->number == number) removeThis = parent; //number to be removed is the root so it has no parent
+  else if(number > parent->number) removeThis = parent->right;
+  else removeThis = parent->left;
   
-  //removeThis has no children
+  //1. removeThis has no children
   if(removeThis->left == NULL && removeThis->right == NULL)  
   {
     if(removeThis->number > parent->number) parent->right = NULL;
@@ -77,7 +76,7 @@ void Tree::remove(int number)
     return;
   }
   
-  //if removeThis only has one child remove it and connect its child with parent of removeThis
+  //2. removeThis has only has one child - remove it and connect its child with parent of removeThis
   if(removeThis->left == NULL ^ removeThis->right == NULL) //^ = exclusive or - returns true if only one of the statements is true (so if one child is null but not both)
   {
     if(removeThis->number > parent->number) //removeThis is the right child of parent
@@ -94,8 +93,8 @@ void Tree::remove(int number)
     return;
   }
   
-  //removeThis has two children: find next largest number - right once, then left until end
-  Node* previous;
+  //3. removeThis has two children - find next largest number (right once, then left until end)
+  Node* previous = removeThis;
   Node* nextLargest = removeThis->right;
   while(nextLargest->left != NULL) 
   {
@@ -103,12 +102,18 @@ void Tree::remove(int number)
     nextLargest = nextLargest->left;
   }
   removeThis->number = nextLargest->number; //replacing the number were removing with the next largest number in tree
-  if(nextLargest->right != NULL)
+  if(removeThis == previous)//found next highest by just going right once
   {
-    previous->left = nextLargest->right;
+    if(nextLargest->right != NULL) previous->right = nextLargest->right;
+    else previous->right = NULL;
   }
-  previous->right = NULL;
+  else //had to go left to find next highest
+  {
+    if(nextLargest->right != NULL) previous->left = nextLargest->right;
+    else previous->left = NULL; 
+  }
   delete nextLargest;
+  cout << "Number removed" << endl;
 }
 
 //searches tree for certain number. if number is there, returns it's parent. if not, returns null
@@ -138,9 +143,10 @@ void Tree::display()
   display_impl(root, 0);
 }
 
+//displays tree using tabs
 void Tree::display_impl(Node* current, int level)
 {
-  if(current != NULL)
+  /*if(current != NULL)
   {
     cout << "parent " << current-> number << " has children "; 
     if(current->right != NULL) cout << current->right->number;
@@ -148,9 +154,9 @@ void Tree::display_impl(Node* current, int level)
     cout << endl;
     display_impl(current->right, 0);
     display_impl(current->left, 0);
-  }
+  } */
   
-  /* if(current == NULL && level == 0)
+  if(current == NULL && level == 0)
   {
     cout << "Tree is empty :(" << endl;
     return;
@@ -162,7 +168,7 @@ void Tree::display_impl(Node* current, int level)
     cout << current->number << endl;
     display_impl(current->left, level + 1);
   }
-  else return; */
+  else return;
 }
 
 //prints tabs according to level of tree that value is at
